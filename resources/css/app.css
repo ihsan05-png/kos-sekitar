@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        color-scheme: dark;
+    }
+
+    body {
+        @apply bg-surface text-on-surface font-body antialiased;
+        selection-color: #002022;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+        background-color: #00f3ff;
+        color: #002022;
+    }
+}
+
+@layer components {
+    .glass-card {
+        background: rgba(14, 60, 41, 0.4);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+    }
+
+    .neon-glow {
+        box-shadow: 0 0 20px -5px rgba(0, 243, 255, 0.3);
+    }
+
+    .glass-card-primary {
+        background: rgba(0, 243, 255, 0.05);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+    }
+
+    .auth-card {
+        background: rgba(14, 60, 41, 0.4);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(58, 73, 75, 0.3);
+    }
+
+    .auth-logo-glow {
+        filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.4));
+    }
+
+    .neon-button-glow {
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+    }
+
+    .neon-border-top {
+        border-top: 2px solid #00f3ff;
+    }
+
+    .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+        user-select: none;
+    }
+}
