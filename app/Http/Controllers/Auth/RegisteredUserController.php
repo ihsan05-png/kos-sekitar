@@ -10,36 +10,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): Response
     {
         return Inertia::render('Auth/Register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'phone'    => 'nullable|string|max:20',
+            'role'     => 'required|in:seeker,owner',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'role'     => $request->role,
             'password' => Hash::make($request->password),
         ]);
 
@@ -47,6 +42,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return match ($user->role) {
+            'owner' => redirect()->route('owner.dashboard'),
+            default => redirect()->route('dashboard'),
+        };
     }
 }

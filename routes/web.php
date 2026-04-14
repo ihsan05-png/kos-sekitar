@@ -28,7 +28,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/owner/dashboard', function () {
     return Inertia::render('Owner/Dashboard');
-})->middleware(['auth', 'verified'])->name('owner.dashboard');
+})->middleware(['auth', 'verified', 'role:owner,admin'])->name('owner.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'verified', 'role:admin'])->name('admin.')->group(function () {
     Route::get('/dashboard', fn () => Inertia::render('Admin/Dashboard'))->name('dashboard');
     Route::get('/users',     fn () => Inertia::render('Admin/Users'))->name('users');
 });
